@@ -1,0 +1,61 @@
+﻿@model Surveys.DTOs.SurveyDTO
+
+@{
+    ViewBag.Title = "Ankieta \"0\"";
+    ViewBag.Message = "Co chcesz zrobić?";
+}
+
+<script type="text/javascript">
+
+    function hello() {
+        alert($('#Answers_0__Item2').valueOf());
+    }
+
+</script>
+
+
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+
+@Html.ActionLink("Nowa ankieta", "Create", "Survey0") @*tylko w ankiecie "0"!*@
+@Html.ActionLink("Edycja ankiety", "Edit", "Survey0")
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>QuestionDTO</legend>
+
+        @if (Model != null)
+        {
+            @Html.HiddenFor(model => model.PatientId)
+            for (int k = 0; k < Model.Questions.Count; k++)
+            {
+                for (int i = 0; i < Model.Questions[k].Answers.Count; i++)
+                {
+            <p>@Model.Questions[k].Text</p>
+                    if (Model.Questions[k].Answers[i].Answer.AnswerTypeId == (int)Surveys.DTOs.AnswerType.RadioButton)
+                    {
+                        for (int j = 0; j < Model.Questions[k].Answers[i].Options.Count; j++)
+                        {
+                            @Html.HiddenFor(model => model.Questions[k].Answers[i].Answer.Id)
+            @Html.RadioButtonFor(model => model.Questions[k].Answers[i].Text,
+                                     Model.Questions[k].Answers[i].Options[j].Option.Text);
+            @Html.LabelFor(model => model.Questions[k].Answers[i].Text,
+                                             Model.Questions[k].Answers[i].Options[j].Option.Text);
+                        }
+                    }
+                }
+            }
+        }
+
+    </fieldset>
+    <p>
+        <input type="submit" value="Go!" />
+
+        @*        <input id="submitButton" type="button" onclick="hello()" value="Go!" />*@
+    </p>
+    
+}
