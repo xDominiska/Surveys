@@ -32,7 +32,7 @@ namespace Surveys.DTOs
 
         public QuestionDTO() { }
 
-        public QuestionDTO(int id, int patientId, SurveysContext db)
+        public QuestionDTO(int id, int patientId, SurveysEntities db)
         {
             // zbuduj pytanie
             var question = db.Questions.Where(x => x.Id == id).FirstOrDefault();
@@ -131,7 +131,7 @@ namespace Surveys.DTOs
         public SurveyType Type { get; set; }
         public int PatientId { get; set; }
         public List<QuestionDTO> Questions { get; set; }
-        private SurveysContext Db { get; set; }
+        private SurveysEntities Db { get; set; }
 
         private int SurveyMinId
         {
@@ -145,7 +145,7 @@ namespace Surveys.DTOs
 
         public SurveyDTO() { }
 
-        public SurveyDTO(SurveyType type, int patientId, SurveysContext db)
+        public SurveyDTO(SurveyType type, int patientId, SurveysEntities db)
         {
             this.Type = type;
             this.PatientId = patientId;

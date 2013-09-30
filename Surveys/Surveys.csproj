@@ -185,7 +185,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Interview1Controller.cs" />
     <Compile Include="Controllers\PatientController.cs" />
+    <Compile Include="Controllers\QuestionnaireController.cs" />
     <Compile Include="Controllers\Survey0Controller.cs" />
     <Compile Include="DTOs\Interview1DTO.cs" />
     <Compile Include="DTOs\SurveyDTO.cs" />
@@ -194,9 +196,45 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\PatientModels.cs" />
-    <Compile Include="Models\QuestionnaireModels.cs" />
-    <Compile Include="Models\SurveysContext.cs" />
+    <Compile Include="Models\Answers.cs">
+      <DependentUpon>Surveys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AnswersTypes.cs">
+      <DependentUpon>Surveys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Options.cs">
+      <DependentUpon>Surveys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Patients.cs">
+      <DependentUpon>Surveys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PatientsChoices.cs">
+      <DependentUpon>Surveys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PatientsQuestionnaires.cs">
+      <DependentUpon>Surveys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Questionnaires.cs">
+      <DependentUpon>Surveys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Questions.cs">
+      <DependentUpon>Surveys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Surveys.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Surveys.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Surveys.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Surveys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Surveys.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Surveys.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -256,6 +294,23 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <EntityDeploy Include="Models\Surveys.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Surveys.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Surveys.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Surveys.edmx</DependentUpon>
+      <LastGenOutput>Surveys.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Surveys.edmx.diagram">
+      <DependentUpon>Surveys.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Surveys.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Surveys.edmx</DependentUpon>
+      <LastGenOutput>Surveys.cs</LastGenOutput>
+    </Content>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -316,6 +371,9 @@
     <Content Include="Views\Patient\Create.cshtml" />
     <Content Include="Views\Patient\Edit.cshtml" />
     <Content Include="Views\Patient\Delete.cshtml" />
+    <Content Include="Views\Questionnaire\Create.cshtml" />
+    <Content Include="Views\Questionnaire\Edit.cshtml" />
+    <Content Include="Views\Interview1\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

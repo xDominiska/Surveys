@@ -1,0 +1,66 @@
+﻿@model Surveys.DTOs.SurveyDTO
+
+@{
+    ViewBag.Title = "Ankieta \"0\"";
+    ViewBag.Message = "Dane z wywiadu";
+    ViewBag.Message2 = "Objawy ze strony dolnego odcinka układu moczowego (LUTS).";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+    <h2>@ViewBag.Message</h2>
+    <h3>@ViewBag.Message2</h3>
+</hgroup>
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>QuestionDTO</legend>
+
+        @if (Model != null)
+        {
+            @Html.HiddenFor(model => model.PatientId)
+            for (int k = 0; k < Model.Questions.Count; k++)
+            {
+                if (Model.Questions[k] != null)
+                {
+            <p>@Model.Questions[k].Text</p>
+            @Html.HiddenFor(model => Model.Questions[k].Answers[0].Answer.Id)
+            @Html.RadioButtonFor(model => Model.Questions[k].Answers[0].Text,
+                                     Model.Questions[k].Answers[0].Options[0].Option.Text);
+            @Html.LabelFor(model => Model.Questions[k].Answers[0].Text,
+                                             Model.Questions[k].Answers[0].Options[0].Option.Text);
+            
+            if (Model.Questions[k].Answers[0].Options[0].NextQuestion != null)
+            {
+            @Html.HiddenFor(model => Model.Questions[k].Answers[0].Options[0].NextQuestion.Answers[0].Answer.Id)
+            @Html.RadioButtonFor(model => Model.Questions[k].Answers[0].Options[0].NextQuestion.Answers[0].Text,
+                                     Model.Questions[k].Answers[0].Options[0].NextQuestion.Answers[0].Options[0].Option.Text);
+            @Html.LabelFor(model => Model.Questions[k].Answers[0].Options[0].NextQuestion.Answers[0].Text,
+                                             Model.Questions[k].Answers[0].Options[0].NextQuestion.Answers[0].Options[0].Option.Text);
+            
+            
+            @Html.HiddenFor(model => Model.Questions[k].Answers[0].Options[0].NextQuestion.Answers[0].Answer.Id)
+            @Html.RadioButtonFor(model => Model.Questions[k].Answers[0].Options[0].NextQuestion.Answers[0].Text,
+                                     Model.Questions[k].Answers[0].Options[0].NextQuestion.Answers[0].Options[1].Option.Text);
+            @Html.LabelFor(model =>Model.Questions[k].Answers[0].Options[0].NextQuestion.Answers[0].Text,
+                                             Model.Questions[k].Answers[0].Options[0].NextQuestion.Answers[0].Options[1].Option.Text);
+            }
+            
+            @Html.HiddenFor(model => Model.Questions[k].Answers[0].Answer.Id)
+            @Html.RadioButtonFor(model => Model.Questions[k].Answers[0].Text,
+                                     Model.Questions[k].Answers[0].Options[1].Option.Text);
+            @Html.LabelFor(model => Model.Questions[k].Answers[0].Text,
+                                             Model.Questions[k].Answers[0].Options[1].Option.Text);
+                           
+
+                }
+            }
+        }
+
+    </fieldset>
+    <p>
+        <input type="submit" value="Go!" />
+    </p>
+    
+}

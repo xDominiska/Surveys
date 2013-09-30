@@ -11,7 +11,7 @@ namespace Surveys.Controllers
 {
     public class PatientController : Controller
     {
-        private SurveysContext db = new SurveysContext();
+        private SurveysEntities db = new SurveysEntities();
         private UsersContext userdb = new UsersContext();
 
         //
@@ -19,7 +19,42 @@ namespace Surveys.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Patient.ToList());
+            var patients = db.Patients.ToList();
+
+            foreach (var p in patients)
+            {
+                p.Info = new Patients.QuestionarriesInfo();
+                if (db.PatientsQuestionnaires.Where(x => x.PatientId == p.Id && x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Wywiad1).Select(x => x.ExaminationDate).Count() > 0)
+                {
+                p.Info.ExaminationDate0 = db.PatientsQuestionnaires.Where(x => x.PatientId == p.Id && x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Wywiad1).Select(x => x.ExaminationDate).First();
+                }
+                else
+                {
+                    p.Info.ExaminationDate0 = null;
+                }
+
+                if (db.PatientsQuestionnaires.Where(x => x.PatientId == p.Id && x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Aplikacja6A
+                                                                                     && x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Aplikacja6B).Select(x => x.ExaminationDate).Count() > 0)
+                {
+                    p.Info.ExaminationDate1 = db.PatientsQuestionnaires.Where(x => x.PatientId == p.Id && x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Aplikacja6A
+                                                                                     && x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Aplikacja6B).Select(x => x.ExaminationDate).First();
+                }
+                else
+                {
+                    p.Info.ExaminationDate1 = null;
+                }
+
+                if (db.PatientsQuestionnaires.Where(x => x.PatientId == p.Id && x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Aplikacja12).Select(x => x.ExaminationDate).Count() > 0)
+                {
+                    p.Info.ExaminationDate2 = db.PatientsQuestionnaires.Where(x => x.PatientId == p.Id && x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Aplikacja12).Select(x => x.ExaminationDate).First();
+                }
+                else
+                {
+                    p.Info.ExaminationDate2 = null;
+                }
+            }
+
+            return View(patients);
         }
 
         //
@@ -27,18 +62,17 @@ namespace Surveys.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            Patient patient = db.Patient.Find(id);
+            Patients patient = db.Patients.Find(id);
             if (patient == null)
             {
                 return HttpNotFound();
             }
 
-            patient.Info = new Patient.QuestionarriesInfo();
-            patient.Info.ExaminationDate0 = db.PatientsQuestionnaires.Where(x => x.PatientId == patient.Id && (x.QuestionnaireId >= (int)Surveys.DTOs.SurveyType.Wywiad1
-                                                                                                                && x.QuestionnaireId <= (int)Surveys.DTOs.SurveyType.Obrazowe)).Select(x => x.ExaminationDate).Min();
-            patient.Info.ExaminationDate1 = db.PatientsQuestionnaires.Where(x => x.PatientId == patient.Id && (x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Aplikacja6A
-                                                                                                                || x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Aplikacja6B)).Select(x => x.ExaminationDate).Min();
-            patient.Info.ExaminationDate2 = db.PatientsQuestionnaires.Where(x => x.PatientId == patient.Id && x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Aplikacja12).Select(x => x.ExaminationDate).Min();
+            patient.Info = new Patients.QuestionarriesInfo();
+            patient.Info.ExaminationDate0 = db.PatientsQuestionnaires.Where(x => x.PatientId == patient.Id && x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Wywiad1).Select(x => x.ExaminationDate).FirstOrDefault();
+            patient.Info.ExaminationDate1 = db.PatientsQuestionnaires.Where(x => x.PatientId == patient.Id && x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Aplikacja6A
+                                                                                               && x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Aplikacja6B).Select(x => x.ExaminationDate).FirstOrDefault();
+            patient.Info.ExaminationDate2 = db.PatientsQuestionnaires.Where(x => x.PatientId == patient.Id && x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Aplikacja12).Select(x => x.ExaminationDate).FirstOrDefault();
 
             return View(patient);
         }
@@ -57,12 +91,12 @@ namespace Surveys.Controllers
         // POST: /Patient/Create
 
         [HttpPost]
-        public ActionResult Create(Patient patient)
+        public ActionResult Create(Patients patient)
         {
             if (ModelState.IsValid)
             {
                 patient.UserId = userdb.UserProfiles.Where(x => x.UserName == User.Identity.Name).FirstOrDefault().UserId;
-                db.Patient.Add(patient);
+                db.Patients.Add(patient);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -75,7 +109,7 @@ namespace Surveys.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Patient patient = db.Patient.Find(id);
+            Patients patient = db.Patients.Find(id);
             if (patient == null)
             {
                 return HttpNotFound();
@@ -90,7 +124,7 @@ namespace Surveys.Controllers
         // POST: /Patient/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(Patient patient)
+        public ActionResult Edit(Patients patient)
         {
             if (ModelState.IsValid)
             {
@@ -107,7 +141,7 @@ namespace Surveys.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Patient patient = db.Patient.Find(id);
+            Patients patient = db.Patients.Find(id);
             if (patient == null)
             {
                 return HttpNotFound();
@@ -121,8 +155,8 @@ namespace Surveys.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Patient patient = db.Patient.Find(id);
-            db.Patient.Remove(patient);
+            Patients patient = db.Patients.Find(id);
+            db.Patients.Remove(patient);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

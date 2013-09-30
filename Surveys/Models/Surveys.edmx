@@ -1,0 +1,587 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SurveysModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="SurveysModelStoreContainer">
+          <EntitySet Name="Answers" EntityType="SurveysModel.Store.Answers" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="AnswersTypes" EntityType="SurveysModel.Store.AnswersTypes" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Options" EntityType="SurveysModel.Store.Options" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Patients" EntityType="SurveysModel.Store.Patients" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PatientsChoices" EntityType="SurveysModel.Store.PatientsChoices" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PatientsQuestionnaires" EntityType="SurveysModel.Store.PatientsQuestionnaires" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Questionnaires" EntityType="SurveysModel.Store.Questionnaires" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Questions" EntityType="SurveysModel.Store.Questions" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Answers_AnswersTypes" Association="SurveysModel.Store.FK_Answers_AnswersTypes">
+            <End Role="AnswersTypes" EntitySet="AnswersTypes" />
+            <End Role="Answers" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Answers_Questions" Association="SurveysModel.Store.FK_Answers_Questions">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="Answers" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Options_Answers" Association="SurveysModel.Store.FK_Options_Answers">
+            <End Role="Answers" EntitySet="Answers" />
+            <End Role="Options" EntitySet="Options" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Options_Questions" Association="SurveysModel.Store.FK_Options_Questions">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="Options" EntitySet="Options" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientsChoices_Answers" Association="SurveysModel.Store.FK_PatientsChoices_Answers">
+            <End Role="Answers" EntitySet="Answers" />
+            <End Role="PatientsChoices" EntitySet="PatientsChoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientsChoices_Patients" Association="SurveysModel.Store.FK_PatientsChoices_Patients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="PatientsChoices" EntitySet="PatientsChoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientsQuestionnaires_Patients" Association="SurveysModel.Store.FK_PatientsQuestionnaires_Patients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="PatientsQuestionnaires" EntitySet="PatientsQuestionnaires" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientsQuestionnaires_Questionnaires" Association="SurveysModel.Store.FK_PatientsQuestionnaires_Questionnaires">
+            <End Role="Questionnaires" EntitySet="Questionnaires" />
+            <End Role="PatientsQuestionnaires" EntitySet="PatientsQuestionnaires" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questions_Questionnaires" Association="SurveysModel.Store.FK_Questions_Questionnaires">
+            <End Role="Questionnaires" EntitySet="Questionnaires" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Answers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="AnswerTypeId" Type="int" Nullable="false" />
+          <Property Name="NumberOfPossibilities" Type="int" Nullable="false" />
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AnswersTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Options">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Text" Type="text" Nullable="false" />
+          <Property Name="NextQuestionId" Type="int" />
+          <Property Name="AnswerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Patients">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Guardian" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="BirthDate" Type="datetime" Nullable="false" />
+          <Property Name="Gender" Type="varchar" Nullable="false" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="PatientsChoices">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="AnswerId" Type="int" Nullable="false" />
+          <Property Name="Answer" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PatientsQuestionnaires">
+          <Key>
+            <PropertyRef Name="PatientId" />
+            <PropertyRef Name="QuestionnaireId" />
+          </Key>
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="QuestionnaireId" Type="int" Nullable="false" />
+          <Property Name="FillingDate" Type="datetime" Nullable="false" />
+          <Property Name="ExaminationDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Questionnaires">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Questions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="QuestionnaireId" Type="int" Nullable="false" />
+          <Property Name="Text" Type="text" Nullable="false" />
+          <Property Name="NumberOfAnswers" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Answers_AnswersTypes">
+          <End Role="AnswersTypes" Type="SurveysModel.Store.AnswersTypes" Multiplicity="1" />
+          <End Role="Answers" Type="SurveysModel.Store.Answers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnswersTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answers">
+              <PropertyRef Name="AnswerTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Answers_Questions">
+          <End Role="Questions" Type="SurveysModel.Store.Questions" Multiplicity="1" />
+          <End Role="Answers" Type="SurveysModel.Store.Answers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answers">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Options_Answers">
+          <End Role="Answers" Type="SurveysModel.Store.Answers" Multiplicity="1" />
+          <End Role="Options" Type="SurveysModel.Store.Options" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Options">
+              <PropertyRef Name="AnswerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Options_Questions">
+          <End Role="Questions" Type="SurveysModel.Store.Questions" Multiplicity="0..1" />
+          <End Role="Options" Type="SurveysModel.Store.Options" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Options">
+              <PropertyRef Name="NextQuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientsChoices_Answers">
+          <End Role="Answers" Type="SurveysModel.Store.Answers" Multiplicity="1" />
+          <End Role="PatientsChoices" Type="SurveysModel.Store.PatientsChoices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PatientsChoices">
+              <PropertyRef Name="AnswerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientsChoices_Patients">
+          <End Role="Patients" Type="SurveysModel.Store.Patients" Multiplicity="1" />
+          <End Role="PatientsChoices" Type="SurveysModel.Store.PatientsChoices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PatientsChoices">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientsQuestionnaires_Patients">
+          <End Role="Patients" Type="SurveysModel.Store.Patients" Multiplicity="1" />
+          <End Role="PatientsQuestionnaires" Type="SurveysModel.Store.PatientsQuestionnaires" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PatientsQuestionnaires">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientsQuestionnaires_Questionnaires">
+          <End Role="Questionnaires" Type="SurveysModel.Store.Questionnaires" Multiplicity="1" />
+          <End Role="PatientsQuestionnaires" Type="SurveysModel.Store.PatientsQuestionnaires" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questionnaires">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PatientsQuestionnaires">
+              <PropertyRef Name="QuestionnaireId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questions_Questionnaires">
+          <End Role="Questionnaires" Type="SurveysModel.Store.Questionnaires" Multiplicity="1" />
+          <End Role="Questions" Type="SurveysModel.Store.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questionnaires">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="QuestionnaireId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SurveysModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SurveysEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Answers" EntityType="SurveysModel.Answers" />
+          <EntitySet Name="AnswersTypes" EntityType="SurveysModel.AnswersTypes" />
+          <EntitySet Name="Options" EntityType="SurveysModel.Options" />
+          <EntitySet Name="Patients" EntityType="SurveysModel.Patients" />
+          <EntitySet Name="PatientsChoices" EntityType="SurveysModel.PatientsChoices" />
+          <EntitySet Name="PatientsQuestionnaires" EntityType="SurveysModel.PatientsQuestionnaires" />
+          <EntitySet Name="Questionnaires" EntityType="SurveysModel.Questionnaires" />
+          <EntitySet Name="Questions" EntityType="SurveysModel.Questions" />
+          <AssociationSet Name="FK_Answers_AnswersTypes" Association="SurveysModel.FK_Answers_AnswersTypes">
+            <End Role="AnswersTypes" EntitySet="AnswersTypes" />
+            <End Role="Answers" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Answers_Questions" Association="SurveysModel.FK_Answers_Questions">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="Answers" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Options_Answers" Association="SurveysModel.FK_Options_Answers">
+            <End Role="Answers" EntitySet="Answers" />
+            <End Role="Options" EntitySet="Options" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientsChoices_Answers" Association="SurveysModel.FK_PatientsChoices_Answers">
+            <End Role="Answers" EntitySet="Answers" />
+            <End Role="PatientsChoices" EntitySet="PatientsChoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Options_Questions" Association="SurveysModel.FK_Options_Questions">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="Options" EntitySet="Options" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientsChoices_Patients" Association="SurveysModel.FK_PatientsChoices_Patients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="PatientsChoices" EntitySet="PatientsChoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientsQuestionnaires_Patients" Association="SurveysModel.FK_PatientsQuestionnaires_Patients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="PatientsQuestionnaires" EntitySet="PatientsQuestionnaires" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientsQuestionnaires_Questionnaires" Association="SurveysModel.FK_PatientsQuestionnaires_Questionnaires">
+            <End Role="Questionnaires" EntitySet="Questionnaires" />
+            <End Role="PatientsQuestionnaires" EntitySet="PatientsQuestionnaires" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questions_Questionnaires" Association="SurveysModel.FK_Questions_Questionnaires">
+            <End Role="Questionnaires" EntitySet="Questionnaires" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Answers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="AnswerTypeId" Type="Int32" Nullable="false" />
+          <Property Name="NumberOfPossibilities" Type="Int32" Nullable="false" />
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AnswersTypes" Relationship="SurveysModel.FK_Answers_AnswersTypes" FromRole="Answers" ToRole="AnswersTypes" />
+          <NavigationProperty Name="Questions" Relationship="SurveysModel.FK_Answers_Questions" FromRole="Answers" ToRole="Questions" />
+          <NavigationProperty Name="Options" Relationship="SurveysModel.FK_Options_Answers" FromRole="Answers" ToRole="Options" />
+          <NavigationProperty Name="PatientsChoices" Relationship="SurveysModel.FK_PatientsChoices_Answers" FromRole="Answers" ToRole="PatientsChoices" />
+        </EntityType>
+        <EntityType Name="AnswersTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Answers" Relationship="SurveysModel.FK_Answers_AnswersTypes" FromRole="AnswersTypes" ToRole="Answers" />
+        </EntityType>
+        <EntityType Name="Options">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="NextQuestionId" Type="Int32" />
+          <Property Name="AnswerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Answers" Relationship="SurveysModel.FK_Options_Answers" FromRole="Options" ToRole="Answers" />
+          <NavigationProperty Name="Questions" Relationship="SurveysModel.FK_Options_Questions" FromRole="Options" ToRole="Questions" />
+        </EntityType>
+        <EntityType Name="Patients">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Guardian" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="PatientsChoices" Relationship="SurveysModel.FK_PatientsChoices_Patients" FromRole="Patients" ToRole="PatientsChoices" />
+          <NavigationProperty Name="PatientsQuestionnaires" Relationship="SurveysModel.FK_PatientsQuestionnaires_Patients" FromRole="Patients" ToRole="PatientsQuestionnaires" />
+        </EntityType>
+        <EntityType Name="PatientsChoices">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="AnswerId" Type="Int32" Nullable="false" />
+          <Property Name="Answer" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Answers" Relationship="SurveysModel.FK_PatientsChoices_Answers" FromRole="PatientsChoices" ToRole="Answers" />
+          <NavigationProperty Name="Patients" Relationship="SurveysModel.FK_PatientsChoices_Patients" FromRole="PatientsChoices" ToRole="Patients" />
+        </EntityType>
+        <EntityType Name="PatientsQuestionnaires">
+          <Key>
+            <PropertyRef Name="PatientId" />
+            <PropertyRef Name="QuestionnaireId" />
+          </Key>
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="QuestionnaireId" Type="Int32" Nullable="false" />
+          <Property Name="FillingDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExaminationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Patients" Relationship="SurveysModel.FK_PatientsQuestionnaires_Patients" FromRole="PatientsQuestionnaires" ToRole="Patients" />
+          <NavigationProperty Name="Questionnaires" Relationship="SurveysModel.FK_PatientsQuestionnaires_Questionnaires" FromRole="PatientsQuestionnaires" ToRole="Questionnaires" />
+        </EntityType>
+        <EntityType Name="Questionnaires">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="PatientsQuestionnaires" Relationship="SurveysModel.FK_PatientsQuestionnaires_Questionnaires" FromRole="Questionnaires" ToRole="PatientsQuestionnaires" />
+          <NavigationProperty Name="Questions" Relationship="SurveysModel.FK_Questions_Questionnaires" FromRole="Questionnaires" ToRole="Questions" />
+        </EntityType>
+        <EntityType Name="Questions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="QuestionnaireId" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="NumberOfAnswers" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Answers" Relationship="SurveysModel.FK_Answers_Questions" FromRole="Questions" ToRole="Answers" />
+          <NavigationProperty Name="Options" Relationship="SurveysModel.FK_Options_Questions" FromRole="Questions" ToRole="Options" />
+          <NavigationProperty Name="Questionnaires" Relationship="SurveysModel.FK_Questions_Questionnaires" FromRole="Questions" ToRole="Questionnaires" />
+        </EntityType>
+        <Association Name="FK_Answers_AnswersTypes">
+          <End Role="AnswersTypes" Type="SurveysModel.AnswersTypes" Multiplicity="1" />
+          <End Role="Answers" Type="SurveysModel.Answers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnswersTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answers">
+              <PropertyRef Name="AnswerTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Answers_Questions">
+          <End Role="Questions" Type="SurveysModel.Questions" Multiplicity="1" />
+          <End Role="Answers" Type="SurveysModel.Answers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answers">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Options_Answers">
+          <End Role="Answers" Type="SurveysModel.Answers" Multiplicity="1" />
+          <End Role="Options" Type="SurveysModel.Options" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Options">
+              <PropertyRef Name="AnswerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientsChoices_Answers">
+          <End Role="Answers" Type="SurveysModel.Answers" Multiplicity="1" />
+          <End Role="PatientsChoices" Type="SurveysModel.PatientsChoices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PatientsChoices">
+              <PropertyRef Name="AnswerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Options_Questions">
+          <End Role="Questions" Type="SurveysModel.Questions" Multiplicity="0..1" />
+          <End Role="Options" Type="SurveysModel.Options" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Options">
+              <PropertyRef Name="NextQuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientsChoices_Patients">
+          <End Role="Patients" Type="SurveysModel.Patients" Multiplicity="1" />
+          <End Role="PatientsChoices" Type="SurveysModel.PatientsChoices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PatientsChoices">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientsQuestionnaires_Patients">
+          <End Role="Patients" Type="SurveysModel.Patients" Multiplicity="1" />
+          <End Role="PatientsQuestionnaires" Type="SurveysModel.PatientsQuestionnaires" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PatientsQuestionnaires">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientsQuestionnaires_Questionnaires">
+          <End Role="Questionnaires" Type="SurveysModel.Questionnaires" Multiplicity="1" />
+          <End Role="PatientsQuestionnaires" Type="SurveysModel.PatientsQuestionnaires" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questionnaires">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PatientsQuestionnaires">
+              <PropertyRef Name="QuestionnaireId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questions_Questionnaires">
+          <End Role="Questionnaires" Type="SurveysModel.Questionnaires" Multiplicity="1" />
+          <End Role="Questions" Type="SurveysModel.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questionnaires">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="QuestionnaireId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SurveysModelStoreContainer" CdmEntityContainer="SurveysEntities">
+          <EntitySetMapping Name="Answers">
+            <EntityTypeMapping TypeName="SurveysModel.Answers">
+              <MappingFragment StoreEntitySet="Answers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AnswerTypeId" ColumnName="AnswerTypeId" />
+                <ScalarProperty Name="NumberOfPossibilities" ColumnName="NumberOfPossibilities" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AnswersTypes">
+            <EntityTypeMapping TypeName="SurveysModel.AnswersTypes">
+              <MappingFragment StoreEntitySet="AnswersTypes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Options">
+            <EntityTypeMapping TypeName="SurveysModel.Options">
+              <MappingFragment StoreEntitySet="Options">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="NextQuestionId" ColumnName="NextQuestionId" />
+                <ScalarProperty Name="AnswerId" ColumnName="AnswerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="SurveysModel.Patients">
+              <MappingFragment StoreEntitySet="Patients">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Guardian" ColumnName="Guardian" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PatientsChoices">
+            <EntityTypeMapping TypeName="SurveysModel.PatientsChoices">
+              <MappingFragment StoreEntitySet="PatientsChoices">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="AnswerId" ColumnName="AnswerId" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PatientsQuestionnaires">
+            <EntityTypeMapping TypeName="SurveysModel.PatientsQuestionnaires">
+              <MappingFragment StoreEntitySet="PatientsQuestionnaires">
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="QuestionnaireId" ColumnName="QuestionnaireId" />
+                <ScalarProperty Name="FillingDate" ColumnName="FillingDate" />
+                <ScalarProperty Name="ExaminationDate" ColumnName="ExaminationDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questionnaires">
+            <EntityTypeMapping TypeName="SurveysModel.Questionnaires">
+              <MappingFragment StoreEntitySet="Questionnaires">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="SurveysModel.Questions">
+              <MappingFragment StoreEntitySet="Questions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="QuestionnaireId" ColumnName="QuestionnaireId" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="NumberOfAnswers" ColumnName="NumberOfAnswers" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

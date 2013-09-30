@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0bbafc0fa8204b89ad43166ef45c7188" Name="Diagram1">
+        <EntityTypeShape EntityType="SurveysModel.Answers" Width="1.5" PointX="5.25" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SurveysModel.AnswersTypes" Width="1.5" PointX="3" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SurveysModel.Options" Width="1.5" PointX="7.5" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SurveysModel.Patients" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="SurveysModel.PatientsChoices" Width="1.5" PointX="7.5" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SurveysModel.PatientsQuestionnaires" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SurveysModel.Questionnaires" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SurveysModel.Questions" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <AssociationConnector Association="SurveysModel.FK_Answers_AnswersTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SurveysModel.FK_Answers_Questions" ManuallyRouted="false" />
+        <AssociationConnector Association="SurveysModel.FK_Options_Answers" ManuallyRouted="false" />
+        <AssociationConnector Association="SurveysModel.FK_PatientsChoices_Answers" ManuallyRouted="false" />
+        <AssociationConnector Association="SurveysModel.FK_Options_Questions" ManuallyRouted="false" />
+        <AssociationConnector Association="SurveysModel.FK_PatientsChoices_Patients" ManuallyRouted="false" />
+        <AssociationConnector Association="SurveysModel.FK_PatientsQuestionnaires_Patients" ManuallyRouted="false" />
+        <AssociationConnector Association="SurveysModel.FK_PatientsQuestionnaires_Questionnaires" ManuallyRouted="false" />
+        <AssociationConnector Association="SurveysModel.FK_Questions_Questionnaires" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

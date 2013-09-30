@@ -5,16 +5,6 @@
     ViewBag.Message = "Co chcesz zrobić?";
 }
 
-<script type="text/javascript">
-
-    function hello() {
-        alert($('#Answers_0__Item2').valueOf());
-    }
-
-</script>
-
-
-
 <hgroup class="title">
     <h1>@ViewBag.Title</h1>
     <h2>@ViewBag.Message</h2>
@@ -33,20 +23,26 @@
             @Html.HiddenFor(model => model.PatientId)
             for (int k = 0; k < Model.Questions.Count; k++)
             {
-                for (int i = 0; i < Model.Questions[k].Answers.Count; i++)
+                var q = Model.Questions[k];
+
+                while (q != null)
                 {
-            <p>@Model.Questions[k].Text</p>
-                    if (Model.Questions[k].Answers[i].Answer.AnswerTypeId == (int)Surveys.DTOs.AnswerType.RadioButton)
+                    for (int i = 0; i < q.Answers.Count; i++)
                     {
-                        for (int j = 0; j < Model.Questions[k].Answers[i].Options.Count; j++)
+            <p>@q.Text</p>
+                        if (q.Answers[i].Answer.AnswerTypeId == (int)Surveys.DTOs.AnswerType.RadioButton)
                         {
-                            @Html.HiddenFor(model => model.Questions[k].Answers[i].Answer.Id)
-            @Html.RadioButtonFor(model => model.Questions[k].Answers[i].Text,
-                                     Model.Questions[k].Answers[i].Options[j].Option.Text);
-            @Html.LabelFor(model => model.Questions[k].Answers[i].Text,
-                                             Model.Questions[k].Answers[i].Options[j].Option.Text);
+                            for (int j = 0; j < q.Answers[i].Options.Count; j++)
+                            {
+            @Html.HiddenFor(model =>q.Answers[i].Answer.Id)
+            @Html.RadioButtonFor(model => q.Answers[i].Text,
+                                     q.Answers[i].Options[j].Option.Text);
+            @Html.LabelFor(model => q.Answers[i].Text,
+                                             q.Answers[i].Options[j].Option.Text);
+                            }
                         }
                     }
+                    
                 }
             }
         }
@@ -54,8 +50,6 @@
     </fieldset>
     <p>
         <input type="submit" value="Go!" />
-
-        @*        <input id="submitButton" type="button" onclick="hello()" value="Go!" />*@
     </p>
     
 }

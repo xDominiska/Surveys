@@ -16,8 +16,8 @@ namespace Surveys.Controllers
         public ActionResult Index()
         {
 
-            var pyt1 = new QuestionDTO(1001, 2, new Models.SurveysContext());
-            var sur1 = new SurveyDTO(SurveyType.Wywiad1, -1, new Models.SurveysContext());
+            var pyt1 = new QuestionDTO(1001, 2, new Models.SurveysEntities());
+            var sur1 = new SurveyDTO(SurveyType.Wywiad1, -1, new Models.SurveysEntities());
 
 
             return View(sur1);
@@ -38,7 +38,7 @@ namespace Surveys.Controllers
         }
 
         //
-        // GET: /Survey0/EditSurvey
+        // GET: /Survey0/Edit
 
         public ActionResult Edit()
         {
