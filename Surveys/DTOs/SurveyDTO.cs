@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Surveys.DTOs
 {
@@ -11,6 +12,7 @@ namespace Surveys.DTOs
         public Answers Answer { get; set; }
         public string Text { get; set; }
         public List<OptionDTO> Options { get; set; }
+        public List<SelectListItem> List { get; set; }
     }
 
     public class OptionDTO
@@ -80,6 +82,7 @@ namespace Surveys.DTOs
                                        select o).ToList();
 
                         List<OptionDTO> fullOptions = new List<OptionDTO>();
+                        List<SelectListItem> optionsList = new List<SelectListItem>();
 
                         if (options != null)
                         {
@@ -90,13 +93,20 @@ namespace Surveys.DTOs
                                     Option = o,
                                     NextQuestion = o.NextQuestionId != null ? new QuestionDTO(o.NextQuestionId.Value, patientId, db) : null
                                 });
+
+                                optionsList.Add(new SelectListItem()
+                                {
+                                   Text = o.Text,
+                                   Value = o.Text
+                                });
                             }
                         }
+
 
                         Answers.Add(new AnswerDTO()
                             {
                                 Answer = a,
-                                Text = patientsChoices.First().Answer,
+                                Text = patientsChoices.Count > 0 ? patientsChoices.First().Answer : null,
                                 Options = fullOptions.Count > 0 ? fullOptions : null
                             });
                     }

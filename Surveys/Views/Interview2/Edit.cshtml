@@ -18,20 +18,115 @@
         @if (Model != null)
         {
             @Html.HiddenFor(model => model.PatientId)
-            for (int k = 0; k < Model.Questions.Count; k++)
+
+            
+            if (Model.Questions != null)
+            {
+                // po pytaniach
+                for (int a = 0; a < Model.Questions.Count; a++)
+                {
+                    if (Model.Questions[a] != null)
+                    {
+            <p>@Model.Questions[a].Text</p>
+                        // po odpowiedziach
+                        for (int b = 0; b < Model.Questions[a].Answers.Count; b++)
+                        {
+                            if (Model.Questions[a].Answers[b] != null)
+                            {               
+            @Html.HiddenFor(model => Model.Questions[a].Answers[b].Answer.Id)
+                                if (Model.Questions[a].Answers[b].Answer.AnswerTypeId == (int)Surveys.DTOs.AnswerType.RadioButton)
+                                {
+                                    if (Model.Questions[a].Answers[b] != null && Model.Questions[a].Answers[b].Options != null)
+                                    {
+                                        // po opcjach
+                                        for (int c = 0; c < Model.Questions[a].Answers[b].Options.Count; c++)
+                                        {
+                                            if (Model.Questions[a].Answers[b].Options[c] != null)
+                                            {
+            @Html.RadioButtonFor(model => Model.Questions[a].Answers[b].Text,
+                                                                          Model.Questions[a].Answers[b].Options[c].Option.Text);
+            @Html.LabelFor(model => Model.Questions[a].Answers[b].Text,
+                                                                    Model.Questions[a].Answers[b].Options[c].Option.Text);
+
+                                                                                                                         // następne pytanie
+                                                                                                                         if (Model.Questions[a].Answers[b].Options[c].NextQuestion != null)
+                                                                                                                         {
+            <p>@Model.Questions[a].Answers[b].Options[c].NextQuestion.Text</p>
+                                                                                                                             // po odpowiedziach
+                                                                                                                             for (int d = 0; d < Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers.Count; d++)
+                                                                                                                             {
+            @Html.HiddenFor(model => Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Answer.Id)
+                                                                                                                                 if (Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d] != null)
+                                                                                                                                 {
+                                                                                                                                     if (Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Answer.AnswerTypeId == (int)Surveys.DTOs.AnswerType.RadioButton)
+                                                                                                                                     {
+                                                                                                                                         // po opcjach
+                                                                                                                                         for (int e = 0; e < Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Options.Count; e++)
+                                                                                                                                         {
+                                                                                                                                             if (Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Options[e] != null)
+                                                                                                                                             {
+            @Html.RadioButtonFor(model => Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Text,
+                                          Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Options[e].Option.Text);
+            @Html.LabelFor(model => Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Text,
+                                          Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Options[e].Option.Text);
+                                                                                                                                             }
+                                                                                                                                         }
+                                                                                                                                     }
+                                                                                                                                     else if (Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Answer.AnswerTypeId == (int)Surveys.DTOs.AnswerType.Text)
+                                                                                                                                     {
+                                                                                                                                         if (Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Answer.Options != null && Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Options.Count == 1)
+                                                                                                                                         {
+            <p>@Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Answer.Options.First().Text</p>
+                                                                                                                                         }
+            @Html.EditorFor(model => Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Text);
+                                                                                                                                     }
+                                                                                                                                 }
+                                                                                                                             }
+                                                                                                                         }
+                                            }
+                                        }
+                                    }
+                                }
+                                else if (Model.Questions[a].Answers[b].Answer.AnswerTypeId == (int)Surveys.DTOs.AnswerType.Text)
+                                {
+                                    if (Model.Questions[a].Answers[b].Answer.Options != null && Model.Questions[a].Answers[b].Answer.Options.Count == 1)
+                                    {
+            <p>@Model.Questions[a].Answers[b].Answer.Options.First().Text</p>
+                                    }
+            @Html.EditorFor(model => Model.Questions[a].Answers[b].Text);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+
+@*   @for (int k = 0; k < Model.Questions.Count; k++)
             {
                 if (Model.Questions[k] != null)
                 {
+                    if (Model.Questions[k].Answers[0].Options == null)
+                    {
+            @Html.LabelFor(model => Model.Questions[k].Answers[0].Text, Model.Questions[k].Text);
+            @Html.EditorFor(model => Model.Questions[k].Answers[0].Text);
+                    }
+                    else
+                    {
             <p>@Model.Questions[k].Text</p>
             @Html.HiddenFor(model => Model.Questions[k].Answers[0].Answer.Id)
             @Html.RadioButtonFor(model => Model.Questions[k].Answers[0].Text,
                                      Model.Questions[k].Answers[0].Options[0].Option.Text);
             @Html.LabelFor(model => Model.Questions[k].Answers[0].Text,
                                              Model.Questions[k].Answers[0].Options[0].Option.Text);
-            
-            if (Model.Questions[k].Answers[0].Options[0].NextQuestion != null)
-            {
-                <p>@Model.Questions[k].Answers[0].Options[0].NextQuestion.Text</p>
+
+                                                                                                  if (Model.Questions[k].Answers[0].Options[0].NextQuestion != null)
+                                                                                                  {
+            <p>@Model.Questions[k].Answers[0].Options[0].NextQuestion.Text</p>
             @Html.HiddenFor(model => Model.Questions[k].Answers[0].Options[0].NextQuestion.Answers[0].Answer.Id)
             @Html.RadioButtonFor(model => Model.Questions[k].Answers[0].Options[0].NextQuestion.Answers[0].Text,
                                      Model.Questions[k].Answers[0].Options[0].NextQuestion.Answers[0].Options[0].Option.Text);
@@ -42,20 +137,20 @@
             @Html.HiddenFor(model => Model.Questions[k].Answers[0].Options[0].NextQuestion.Answers[0].Answer.Id)
             @Html.RadioButtonFor(model => Model.Questions[k].Answers[0].Options[0].NextQuestion.Answers[0].Text,
                                      Model.Questions[k].Answers[0].Options[0].NextQuestion.Answers[0].Options[1].Option.Text);
-            @Html.LabelFor(model =>Model.Questions[k].Answers[0].Options[0].NextQuestion.Answers[0].Text,
+            @Html.LabelFor(model => Model.Questions[k].Answers[0].Options[0].NextQuestion.Answers[0].Text,
                                              Model.Questions[k].Answers[0].Options[0].NextQuestion.Answers[0].Options[1].Option.Text);
-            }
+                                                                                                  }
             
             @Html.HiddenFor(model => Model.Questions[k].Answers[0].Answer.Id)
             @Html.RadioButtonFor(model => Model.Questions[k].Answers[0].Text,
                                      Model.Questions[k].Answers[0].Options[1].Option.Text);
             @Html.LabelFor(model => Model.Questions[k].Answers[0].Text,
                                              Model.Questions[k].Answers[0].Options[1].Option.Text);
-                           
 
+                    }
                 }
             }
-        }
+        }*@
 
     </fieldset>
     <p>
