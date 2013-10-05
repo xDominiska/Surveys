@@ -2,28 +2,27 @@
 using Surveys.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace Surveys.Controllers
 {
-    public class Interview1Controller : Controller
+    public class Interview2Controller : Controller
     {
         private SurveysEntities db = new SurveysEntities();
 
         //
-        // GET: /Inteview1/Edit/5
+        // GET: /Inteview2/Edit/5
 
         public ActionResult Edit(int id)
         {
-            var sur = new SurveyDTO(SurveyType.Wywiad1, id, db);
+            var sur = new SurveyDTO(SurveyType.Wywiad2, id, db);
             return View(sur);
         }
 
         //
-        // POST: /Inteview1/Edit
+        // POST: /Inteview2/Edit
 
         [HttpPost]
         public ActionResult Edit(SurveyDTO sur)
@@ -33,7 +32,7 @@ namespace Surveys.Controllers
                 SaveChoice(questions, sur.PatientId);
             }
 
-            return RedirectToAction("Edit", new { controller = "Interview2", id = sur.PatientId });
+            return RedirectToAction("Edit", new { controller = "Physical", id = sur.PatientId });
         }
 
         public void SaveChoice(QuestionDTO question, int patientId)
@@ -76,5 +75,6 @@ namespace Surveys.Controllers
             db.Dispose();
             base.Dispose(disposing);
         }
+
     }
 }

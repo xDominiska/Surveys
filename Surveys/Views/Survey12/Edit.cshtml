@@ -1,0 +1,13 @@
+﻿@model Surveys.DTOs.SurveyDTO
+
+@{
+    ViewBag.Title = "Ankieta \"12\"";
+    ViewBag.Message = "(po 12 miesiącach od włączenia do badania; dotyczy pacjentów z monosymptomatycznym moczeniem nocnym)";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+
+@Html.Partial("_SurveyPartial", Model)

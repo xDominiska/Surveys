@@ -38,7 +38,20 @@ namespace Surveys.Controllers
             {
                 db.PatientsQuestionnaires.Add(patientsquestionnaires);
                 db.SaveChanges();
-                return RedirectToAction("Edit", new { controller = "Interview1", id = patientsquestionnaires.PatientId });
+
+                switch (patientsquestionnaires.QuestionnaireId)
+                {
+                    case (int)Surveys.DTOs.SurveyType.Wywiad1 :
+                        return RedirectToAction("Edit", new { controller = "Interview1", id = patientsquestionnaires.PatientId });
+                    case (int)Surveys.DTOs.SurveyType.Aplikacja6A:
+                        return RedirectToAction("Edit", new { controller = "Survey6A", id = patientsquestionnaires.PatientId });
+                    case (int)Surveys.DTOs.SurveyType.Aplikacja6B:
+                        return RedirectToAction("Edit", new { controller = "Survey6B", id = patientsquestionnaires.PatientId });
+                    case (int)Surveys.DTOs.SurveyType.Aplikacja12:
+                        return RedirectToAction("Edit", new { controller = "Survey12", id = patientsquestionnaires.PatientId });
+
+                }
+
             }
 
             return View(patientsquestionnaires);

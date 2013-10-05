@@ -82,7 +82,14 @@ namespace Surveys.DTOs
                                        select o).ToList();
 
                         List<OptionDTO> fullOptions = new List<OptionDTO>();
-                        List<SelectListItem> optionsList = new List<SelectListItem>();
+                        List<SelectListItem> optionsList = new List<SelectListItem>()
+                            {
+                                new SelectListItem()
+                                {
+                                    Text = "",
+                                    Value = ""
+                                }
+                            };
 
                         if (options != null)
                         {
@@ -107,7 +114,8 @@ namespace Surveys.DTOs
                             {
                                 Answer = a,
                                 Text = patientsChoices.Count > 0 ? patientsChoices.First().Answer : null,
-                                Options = fullOptions.Count > 0 ? fullOptions : null
+                                Options = fullOptions.Count > 0 ? fullOptions : null,
+                                List = optionsList.Count > 0 ? optionsList : null
                             });
                     }
                 }

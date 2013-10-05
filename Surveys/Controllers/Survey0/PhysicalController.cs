@@ -8,21 +8,21 @@ using System.Web.Mvc;
 
 namespace Surveys.Controllers
 {
-    public class Interview2Controller : Controller
+    public class PhysicalController : Controller
     {
         private SurveysEntities db = new SurveysEntities();
 
         //
-        // GET: /Inteview2/Edit/5
+        // GET: /Physical/Edit/5
 
         public ActionResult Edit(int id)
         {
-            var sur = new SurveyDTO(SurveyType.Wywiad2, id, db);
+            var sur = new SurveyDTO(SurveyType.Fizykalne, id, db);
             return View(sur);
         }
 
         //
-        // POST: /Inteview2/Edit
+        // POST: /Physical/Edit
 
         [HttpPost]
         public ActionResult Edit(SurveyDTO sur)
@@ -32,9 +32,7 @@ namespace Surveys.Controllers
                 SaveChoice(questions, sur.PatientId);
             }
 
-         //   RedirectToAction("Edit", new { controller = "Interview2", id = sur.PatientId });
-
-            return View(sur);
+            return RedirectToAction("Edit", new { controller = "Lab", id = sur.PatientId });
         }
 
         public void SaveChoice(QuestionDTO question, int patientId)

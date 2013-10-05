@@ -185,11 +185,16 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\Interview1Controller.cs" />
-    <Compile Include="Controllers\Interview2Controller.cs" />
+    <Compile Include="Controllers\Survey0\Interview1Controller.cs" />
+    <Compile Include="Controllers\Survey0\Interview2Controller.cs" />
+    <Compile Include="Controllers\Survey0\LabController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
+    <Compile Include="Controllers\Survey0\PhysicalController.cs" />
+    <Compile Include="Controllers\Survey0\PictureController.cs" />
     <Compile Include="Controllers\QuestionnaireController.cs" />
     <Compile Include="Controllers\Survey0Controller.cs" />
+    <Compile Include="Controllers\Survey12Controller.cs" />
+    <Compile Include="Controllers\Survey6Controller.cs" />
     <Compile Include="DTOs\Interview1DTO.cs" />
     <Compile Include="DTOs\SurveyDTO.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -378,6 +383,13 @@
     <Content Include="Views\Questionnaire\Edit.cshtml" />
     <Content Include="Views\Interview1\Edit.cshtml" />
     <Content Include="Views\Interview2\Edit.cshtml" />
+    <Content Include="Views\Shared\_SurveyPartial.cshtml" />
+    <Content Include="Views\Physical\Edit.cshtml" />
+    <Content Include="Views\Lab\Edit.cshtml" />
+    <Content Include="Views\Shared\Saved.cshtml" />
+    <Content Include="Views\Picture\Edit.cshtml" />
+    <Content Include="Views\Survey12\Edit.cshtml" />
+    <Content Include="Views\Survey6\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
