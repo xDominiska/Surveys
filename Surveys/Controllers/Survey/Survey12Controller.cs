@@ -18,7 +18,7 @@ namespace Surveys.Controllers
         public ActionResult Edit(int id)
         {
             SurveyDTO sur;
-            if (db.PatientsChoices.Where(x => x.PatientId == id && x.AnswerId > 15000 && x.AnswerId < 20000 && x.Answer == "Tak").Count() > 0)
+            if (db.PatientsChoices.Where(x => x.PatientId == id && x.AnswerId > 15000 && x.AnswerId < 20000 && (string)x.Answer == "Tak").Count() > 0)
             {
                 sur = new SurveyDTO(SurveyType.Aplikacja6A, id, db);
             }

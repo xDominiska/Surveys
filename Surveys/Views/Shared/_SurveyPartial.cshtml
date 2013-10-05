@@ -17,12 +17,13 @@
                 {
                     if (Model.Questions[a] != null)
                     {
-            <p>@Model.Questions[a].Text</p>
+            <br />
+            <p class="question">@Model.Questions[a].Text</p>
                         // po odpowiedziach
                         for (int b = 0; b < Model.Questions[a].Answers.Count; b++)
                         {
                             if (Model.Questions[a].Answers[b] != null)
-                            {               
+                            {     
             @Html.HiddenFor(model => Model.Questions[a].Answers[b].Answer.Id)
                                 if (Model.Questions[a].Answers[b].Answer.AnswerTypeId == (int)Surveys.DTOs.AnswerType.RadioButton)
                                 {
@@ -32,7 +33,8 @@
                                         for (int c = 0; c < Model.Questions[a].Answers[b].Options.Count; c++)
                                         {
                                             if (Model.Questions[a].Answers[b].Options[c] != null)
-                                            {
+                                            {                    
+            <br />
             @Html.RadioButtonFor(model => Model.Questions[a].Answers[b].Text,
                                                                           Model.Questions[a].Answers[b].Options[c].Option.Text);
             @Html.LabelFor(model => Model.Questions[a].Answers[b].Text,
@@ -41,6 +43,7 @@
                                                                                                                          // następne pytanie
                                                                                                                          if (Model.Questions[a].Answers[b].Options[c].NextQuestion != null)
                                                                                                                          {
+            <p>&nbsp&nbsp&nbsp</p>
             <p>@Model.Questions[a].Answers[b].Options[c].NextQuestion.Text</p>
                                                                                                                              // po odpowiedziach
                                                                                                                              for (int d = 0; d < Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers.Count; d++)
@@ -54,18 +57,19 @@
                                                                                                                                          for (int e = 0; e < Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Options.Count; e++)
                                                                                                                                          {
                                                                                                                                              if (Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Options[e] != null)
-                                                                                                                                             {
+                                                                                                                                             {                      
             @Html.RadioButtonFor(model => Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Text,
                                           Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Options[e].Option.Text);
             @Html.LabelFor(model => Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Text,
-                                          Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Options[e].Option.Text);
+                                    Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Options[e].Option.Text);
                                                                                                                                              }
                                                                                                                                          }
                                                                                                                                      }
                                                                                                                                      else if (Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Answer.AnswerTypeId == (int)Surveys.DTOs.AnswerType.Text)
                                                                                                                                      {
-                                                                                                                                         if (Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Answer.Options != null && Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Options.Count == 1)
+                                                                                                                                         if (Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Answer.Options != null && Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Answer.Options.Count == 1)
                                                                                                                                          {
+            <br />
             <p>@Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Answer.Options.First().Text</p>
                                                                                                                                          }
             @Html.EditorFor(model => Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Text);
@@ -74,7 +78,7 @@
                                                                                                                                      {
                                                                                                                                          if (Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].List != null)
                                                                                                                                          {
-                                                                                                                                             @Html.DropDownListFor(model => Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Text, Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].List);
+            @Html.DropDownListFor(model => Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Text, Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].List);
                                                                                                                                          }
                                                                                                                                      }
                                                                                                                                  }
@@ -88,6 +92,8 @@
                                 {
                                     if (Model.Questions[a].Answers[b].Answer.Options != null && Model.Questions[a].Answers[b].Answer.Options.Count == 1)
                                     {
+            <br />
+            <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
             <p>@Model.Questions[a].Answers[b].Answer.Options.First().Text</p>
                                     }
             @Html.EditorFor(model => Model.Questions[a].Answers[b].Text);
@@ -96,7 +102,7 @@
                                 {
                                     if (Model.Questions[a].Answers[b].List != null)
                                     {
-                                        @Html.DropDownListFor(model => Model.Questions[a].Answers[b].Text, Model.Questions[a].Answers[b].List);
+            @Html.DropDownListFor(model => Model.Questions[a].Answers[b].Text, Model.Questions[a].Answers[b].List);
                                     }
                                 }
                             }

@@ -8,29 +8,21 @@ using System.Web.Mvc;
 
 namespace Surveys.Controllers
 {
-    public class Survey6Controller : Controller
+    public class Survey6AController : Controller
     {
         private SurveysEntities db = new SurveysEntities();
 
         //
-        // GET: /Survey6/Edit/5
+        // GET: /Survey6A/Edit/5
 
         public ActionResult Edit(int id)
         {
-            SurveyDTO sur;
-            if (db.PatientsChoices.Where(x => x.PatientId == id && x.AnswerId > 15000 && x.AnswerId < 20000 && x.Answer == "Tak").Count() > 0)
-            {
-                sur = new SurveyDTO(SurveyType.Aplikacja6A, id, db);
-            }
-            else
-            {
-                sur = new SurveyDTO(SurveyType.Aplikacja6B, id, db);
-            }
+            var sur = new SurveyDTO(SurveyType.Aplikacja6A, id, db);
             return View(sur);
         }
 
         //
-        // POST: /Survey6/Edit
+        // POST: /Survey6A/Edit
 
         [HttpPost]
         public ActionResult Edit(SurveyDTO sur)

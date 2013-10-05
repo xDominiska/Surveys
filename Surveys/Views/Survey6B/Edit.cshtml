@@ -1,0 +1,13 @@
+﻿@model Surveys.DTOs.SurveyDTO
+
+@{
+    ViewBag.Title = "Ankieta \"6\"";
+    ViewBag.Message = "(po 6 miesiącach od rozpoczęcia diagnostyki i leczenia)";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+
+@Html.Partial("_SurveyPartial", Model)

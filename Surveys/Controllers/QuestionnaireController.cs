@@ -12,7 +12,7 @@ namespace Surveys.Controllers
     public class QuestionnaireController : Controller
     {
         private SurveysEntities db = new SurveysEntities();
-        
+
         //
         // GET: /Questionnaire/Create
 
@@ -22,7 +22,8 @@ namespace Surveys.Controllers
             {
                 PatientId = patientId,
                 QuestionnaireId = questionnaireId,
-                FillingDate = DateTime.Now
+                FillingDate = DateTime.Now,
+                ExaminationDate = DateTime.Now
             };
 
             return View(pq);
@@ -41,17 +42,20 @@ namespace Surveys.Controllers
 
                 switch (patientsquestionnaires.QuestionnaireId)
                 {
-                    case (int)Surveys.DTOs.SurveyType.Wywiad1 :
+                    case (int)Surveys.DTOs.SurveyType.Wywiad1:
                         return RedirectToAction("Edit", new { controller = "Interview1", id = patientsquestionnaires.PatientId });
                     case (int)Surveys.DTOs.SurveyType.Aplikacja6A:
-                        return RedirectToAction("Edit", new { controller = "Survey6A", id = patientsquestionnaires.PatientId });
-                    case (int)Surveys.DTOs.SurveyType.Aplikacja6B:
-                        return RedirectToAction("Edit", new { controller = "Survey6B", id = patientsquestionnaires.PatientId });
+                        if (db.PatientsChoices.Where(x => x.PatientId == patientsquestionnaires.PatientId && x.AnswerId > 10000 && x.AnswerId < 20000 && (string)x.Answer == "Tak").Count() > 0)
+                        {
+                            return RedirectToAction("Edit", new { controller = "Survey6A", id = patientsquestionnaires.PatientId });
+                        }
+                        else
+                        {
+                            return RedirectToAction("Edit", new { controller = "Survey6B", id = patientsquestionnaires.PatientId });
+                        }
                     case (int)Surveys.DTOs.SurveyType.Aplikacja12:
                         return RedirectToAction("Edit", new { controller = "Survey12", id = patientsquestionnaires.PatientId });
-
                 }
-
             }
 
             return View(patientsquestionnaires);
@@ -80,7 +84,23 @@ namespace Surveys.Controllers
             {
                 db.Entry(patientsquestionnaires).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Edit", new { controller = "Interview1", id = patientsquestionnaires.PatientId });
+
+                switch (patientsquestionnaires.QuestionnaireId)
+                {
+                    case (int)Surveys.DTOs.SurveyType.Wywiad1:
+                        return RedirectToAction("Edit", new { controller = "Interview1", id = patientsquestionnaires.PatientId });
+                    case (int)Surveys.DTOs.SurveyType.Aplikacja6A:
+                        if (db.PatientsChoices.Where(x => x.PatientId == patientsquestionnaires.PatientId && x.AnswerId > 10000 && x.AnswerId < 20000 && (string)x.Answer == (string)"Tak").Count() > 0)
+                        {
+                            return RedirectToAction("Edit", new { controller = "Survey6A", id = patientsquestionnaires.PatientId });
+                        }
+                        else
+                        {
+                            return RedirectToAction("Edit", new { controller = "Survey6B", id = patientsquestionnaires.PatientId });
+                        }
+                    case (int)Surveys.DTOs.SurveyType.Aplikacja12:
+                        return RedirectToAction("Edit", new { controller = "Survey12", id = patientsquestionnaires.PatientId });
+                }
             }
             return View(patientsquestionnaires);
         }

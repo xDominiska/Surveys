@@ -185,22 +185,24 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\Survey0\Interview1Controller.cs" />
-    <Compile Include="Controllers\Survey0\Interview2Controller.cs" />
-    <Compile Include="Controllers\Survey0\LabController.cs" />
-    <Compile Include="Controllers\PatientController.cs" />
-    <Compile Include="Controllers\Survey0\PhysicalController.cs" />
-    <Compile Include="Controllers\Survey0\PictureController.cs" />
+    <Compile Include="Controllers\Survey\Interview1Controller.cs" />
+    <Compile Include="Controllers\Survey\Interview2Controller.cs" />
+    <Compile Include="Controllers\Survey\LabController.cs" />
+    <Compile Include="Controllers\Survey\PatientController.cs" />
+    <Compile Include="Controllers\Survey\PhysicalController.cs" />
+    <Compile Include="Controllers\Survey\PictureController.cs" />
     <Compile Include="Controllers\QuestionnaireController.cs" />
     <Compile Include="Controllers\Survey0Controller.cs" />
-    <Compile Include="Controllers\Survey12Controller.cs" />
-    <Compile Include="Controllers\Survey6Controller.cs" />
+    <Compile Include="Controllers\Survey\Survey12Controller.cs" />
+    <Compile Include="Controllers\Survey\Survey6AController.cs" />
+    <Compile Include="Controllers\Survey\Survey6BController.cs" />
     <Compile Include="DTOs\Interview1DTO.cs" />
     <Compile Include="DTOs\SurveyDTO.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Validators.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Answers.cs">
       <DependentUpon>Surveys.tt</DependentUpon>
@@ -389,7 +391,8 @@
     <Content Include="Views\Shared\Saved.cshtml" />
     <Content Include="Views\Picture\Edit.cshtml" />
     <Content Include="Views\Survey12\Edit.cshtml" />
-    <Content Include="Views\Survey6\Edit.cshtml" />
+    <Content Include="Views\Survey6A\Edit.cshtml" />
+    <Content Include="Views\Survey6B\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

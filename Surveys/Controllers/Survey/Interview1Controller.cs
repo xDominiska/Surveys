@@ -32,8 +32,7 @@ namespace Surveys.Controllers
             {
                 SaveChoice(questions, sur.PatientId);
             }
-
-            if (db.PatientsChoices.Where(x => x.PatientId == sur.PatientId && x.AnswerId > 15000 && x.AnswerId < 20000 && x.Answer == "Tak").Count() > 0)
+            if (db.PatientsChoices.Where(x => x.PatientId == sur.PatientId && x.AnswerId > 10000 && x.AnswerId < 20000 && (string)x.Answer == "Tak").Count() > 0)
             {
                 return RedirectToAction("Edit", new { controller = "Interview2", id = sur.PatientId });
             }

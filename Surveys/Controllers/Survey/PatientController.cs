@@ -33,11 +33,11 @@ namespace Surveys.Controllers
                     p.Info.ExaminationDate0 = null;
                 }
 
-                if (db.PatientsQuestionnaires.Where(x => x.PatientId == p.Id && x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Aplikacja6A
-                                                                                     && x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Aplikacja6B).Select(x => x.ExaminationDate).Count() > 0)
+                if (db.PatientsQuestionnaires.Where(x => x.PatientId == p.Id && (x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Aplikacja6A
+                                                                                     || x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Aplikacja6B)).Select(x => x.ExaminationDate).Count() > 0)
                 {
-                    p.Info.ExaminationDate1 = db.PatientsQuestionnaires.Where(x => x.PatientId == p.Id && x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Aplikacja6A
-                                                                                     && x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Aplikacja6B).Select(x => x.ExaminationDate).First();
+                    p.Info.ExaminationDate1 = db.PatientsQuestionnaires.Where(x => x.PatientId == p.Id && (x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Aplikacja6A
+                                                                                     || x.QuestionnaireId == (int)Surveys.DTOs.SurveyType.Aplikacja6B)).Select(x => x.ExaminationDate).First();
                 }
                 else
                 {

@@ -9,8 +9,10 @@
 
 namespace Surveys.Models
 {
+    using Surveys.Helpers;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     
     public partial class PatientsQuestionnaires
@@ -18,8 +20,10 @@ namespace Surveys.Models
         public int PatientId { get; set; }
         public int QuestionnaireId { get; set; }
         [DataType(DataType.Date)]
+        [DisplayName("Data wype³nienia")]
         public System.DateTime FillingDate { get; set; }
         [DataType(DataType.Date)]
+        [DisplayName("Data badania")]
         public System.DateTime ExaminationDate { get; set; }
     
         public virtual Patients Patients { get; set; }

@@ -11,6 +11,7 @@ namespace Surveys.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     
@@ -25,10 +26,13 @@ namespace Surveys.Models
         public int Id { get; set; }
         public string Code { get; set; }
         public int UserId { get; set; }
+        [DisplayName("Opienkun")]
         public string Guardian { get; set; }
         [DataType(DataType.Date)]
+        [DisplayName("Data urodzenia")]
         public System.DateTime BirthDate { get; set; }
         [MinLength(1), MaxLength(1)]
+        [DisplayName("P³eæ")]
         public string Gender { get; set; }
     
         public virtual ICollection<PatientsChoices> PatientsChoices { get; set; }
