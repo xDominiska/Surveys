@@ -9,17 +9,29 @@ using Surveys.Models;
 
 namespace Surveys.Controllers
 {
+    [Authorize]
     public class PatientController : Controller
     {
         private SurveysEntities db = new SurveysEntities();
         private UsersContext userdb = new UsersContext();
+        private const TimeSpan SIX_MONTHS = new TimeSpan(30 * 6, 0, 0, 0);
+        private const TimeSpan TWELVE_MONTHS = new TimeSpan(30 * 12, 0, 0, 0);
 
         //
         // GET: /Patient/
 
-        public ActionResult Index()
+        public ActionResult Index(int id = -1)
         {
-            var patients = db.Patients.ToList();
+            IList<Patients> patients;
+            if (User.Identity.IsAuthenticated && User.Identity.Name.ToLower() == "admin")
+            {
+                patients = db.Patients.Where(x => !x.IsDeleted).ToList();
+            }
+            else
+            {
+                int userId = GetUserId();
+                patients = db.Patients.Where(x => !x.IsDeleted && x.UserId == userId).ToList();
+            }
 
             foreach (var p in patients)
             {
@@ -54,6 +66,23 @@ namespace Surveys.Controllers
                 }
             }
 
+            if (id == 0)
+            {
+                patients = patients.Where(p => p.Info.ExaminationDate0 == null).ToList() ;
+            }
+            else if (id == 1)
+            {
+                patients = patients.Where(p => p.Info.ExaminationDate0 != null
+                                            && (DateTime.Now - p.Info.ExaminationDate0 > SIX_MONTHS)
+                                            && p.Info.ExaminationDate1 == null).ToList();
+            }
+            else if (id == 2)
+            {
+                patients = patients.Where(p => p.Info.ExaminationDate1 != null
+                                            && (DateTime.Now - p.Info.ExaminationDate1 > TWELVE_MONTHS)
+                                            && p.Info.ExaminationDate2 == null).ToList();
+            }
+
             return View(patients);
         }
 
@@ -63,7 +92,7 @@ namespace Surveys.Controllers
         public ActionResult Details(int id = 0)
         {
             Patients patient = db.Patients.Find(id);
-            if (patient == null)
+            if (patient == null || patient.IsDeleted)
             {
                 return HttpNotFound();
             }
@@ -95,7 +124,7 @@ namespace Surveys.Controllers
         {
             if (ModelState.IsValid)
             {
-                patient.UserId = userdb.UserProfiles.Where(x => x.UserName == User.Identity.Name).FirstOrDefault().UserId;
+                patient.UserId = GetUserId();
                 db.Patients.Add(patient);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -110,7 +139,7 @@ namespace Surveys.Controllers
         public ActionResult Edit(int id = 0)
         {
             Patients patient = db.Patients.Find(id);
-            if (patient == null)
+            if (patient == null || patient.IsDeleted)
             {
                 return HttpNotFound();
             }
@@ -128,7 +157,7 @@ namespace Surveys.Controllers
         {
             if (ModelState.IsValid)
             {
-                patient.UserId = userdb.UserProfiles.Where(x => x.UserName == User.Identity.Name).FirstOrDefault().UserId;
+                patient.UserId = GetUserId();
                 db.Entry(patient).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -142,7 +171,7 @@ namespace Surveys.Controllers
         public ActionResult Delete(int id = 0)
         {
             Patients patient = db.Patients.Find(id);
-            if (patient == null)
+            if (patient == null || patient.IsDeleted)
             {
                 return HttpNotFound();
             }
@@ -156,7 +185,7 @@ namespace Surveys.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Patients patient = db.Patients.Find(id);
-            db.Patients.Remove(patient);
+            patient.IsDeleted = true;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -185,6 +214,11 @@ namespace Surveys.Controllers
             };
 
             ViewBag.GuardianChoice = guardians;
+        }
+
+        private int GetUserId()
+        {
+            return userdb.UserProfiles.Where(x => x.UserName == User.Identity.Name).FirstOrDefault().UserId;
         }
     }
 }

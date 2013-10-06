@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SurveysModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SurveysModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="SurveysModelStoreContainer">
           <EntitySet Name="Answers" EntityType="SurveysModel.Store.Answers" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="AnswersTypes" EntityType="SurveysModel.Store.AnswersTypes" store:Type="Tables" Schema="dbo" />
@@ -71,7 +71,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Text" Type="text" Nullable="false" />
           <Property Name="NextQuestionId" Type="int" />
           <Property Name="AnswerId" Type="int" Nullable="false" />
@@ -86,6 +86,7 @@
           <Property Name="Guardian" Type="varchar" Nullable="false" MaxLength="15" />
           <Property Name="BirthDate" Type="datetime" Nullable="false" />
           <Property Name="Gender" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="PatientsChoices">
           <Key>
@@ -94,7 +95,7 @@
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="PatientId" Type="int" Nullable="false" />
           <Property Name="AnswerId" Type="int" Nullable="false" />
-          <Property Name="Answer" Type="text" Nullable="false" />
+          <Property Name="Answer" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="PatientsQuestionnaires">
           <Key>
@@ -230,8 +231,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SurveysModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -325,6 +325,7 @@
           <Property Name="Gender" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="PatientsChoices" Relationship="SurveysModel.FK_PatientsChoices_Patients" FromRole="Patients" ToRole="PatientsChoices" />
           <NavigationProperty Name="PatientsQuestionnaires" Relationship="SurveysModel.FK_PatientsQuestionnaires_Patients" FromRole="Patients" ToRole="PatientsQuestionnaires" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
         </EntityType>
         <EntityType Name="PatientsChoices">
           <Key>
@@ -333,7 +334,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="PatientId" Type="Int32" Nullable="false" />
           <Property Name="AnswerId" Type="Int32" Nullable="false" />
-          <Property Name="Answer" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="Answer" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Answers" Relationship="SurveysModel.FK_PatientsChoices_Answers" FromRole="PatientsChoices" ToRole="Answers" />
           <NavigationProperty Name="Patients" Relationship="SurveysModel.FK_PatientsChoices_Patients" FromRole="PatientsChoices" ToRole="Patients" />
         </EntityType>
@@ -515,6 +516,7 @@
           <EntitySetMapping Name="Patients">
             <EntityTypeMapping TypeName="SurveysModel.Patients">
               <MappingFragment StoreEntitySet="Patients">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />

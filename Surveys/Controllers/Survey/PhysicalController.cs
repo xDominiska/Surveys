@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace Surveys.Controllers
 {
+    [Authorize]
     public class PhysicalController : Controller
     {
         private SurveysEntities db = new SurveysEntities();

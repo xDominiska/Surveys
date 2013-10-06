@@ -1,10 +1,10 @@
 ﻿@model Surveys.Models.Patients
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Stwórz";
 }
 
-<h2>Create</h2>
+<h2>Dodaj pacjenta</h2>
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
@@ -17,36 +17,20 @@
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.Code)
-            @Html.ValidationMessageFor(model => model.Code)
         </div>
-
-@*        <div class="editor-label">
-            @Html.LabelFor(model => model.UserId)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.UserId)
-            @Html.ValidationMessageFor(model => model.UserId)
-        </div>*@
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Guardian)
         </div>
           <div class="editor-field">
             @Html.DropDownListFor(model => model.Guardian, ViewBag.GuardianChoice as IEnumerable<SelectListItem>)
-            @Html.ValidationMessageFor(model => model.Guardian)
         </div>
 
- @*       <div class="editor-field">
-            @Html.EditorFor(model => model.Guardian)
-            @Html.ValidationMessageFor(model => model.Guardian)
-        </div>*@
-
         <div class="editor-label">
-            @Html.LabelFor(model => model.BirthDate)
+            @Html.LabelFor(model => model.BirthDate) (format: RRRR-MM-DD)
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.BirthDate)
-            @Html.ValidationMessageFor(model => model.BirthDate)
         </div>
 
         <div class="editor-label">
@@ -56,19 +40,14 @@
             @Html.DropDownListFor(model => model.Gender, ViewBag.GenderChoice as IEnumerable<SelectListItem>)
         </div>
 
-     @*   <div class="editor-field">
-            @Html.EditorFor(model => model.Gender)
-            @Html.ValidationMessageFor(model => model.Gender)
-        </div>*@
-
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="Dodaj pacjenta" />
         </p>
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Wroć do listy pacjentów", "Index")
 </div>
 
 @section Scripts {

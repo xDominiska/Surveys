@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Surveys.Models.Patients>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista pacjentów";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
 <p>
     @Html.ActionLink("Dodaj pacjenta", "Create")
@@ -14,9 +14,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Code)
         </th>
-        @* <th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Guardian)
         </th>
@@ -44,9 +41,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Code)
             </td>
-            @*        <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Guardian)
             </td>
@@ -56,52 +50,45 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Gender)
             </td>
-            @if (item.Info.ExaminationDate0 != null)
-            { 
-                <td>
+            <td>
+                @if (item.Info.ExaminationDate0 != null)
+                { 
+                
                     @Html.DisplayFor(modelItem => item.Info.ExaminationDate0)
                     @Html.ActionLink("Edytuj", "Edit", new { controller = "Questionnaire", patientId = item.Id, questionnaireId = 1 })
-                </td>
-            }
-            else
-            {
-                <td>
-                    brak
+                }
+                else
+                {
+                    <p>brak</p>
                     @Html.ActionLink("Stwórz", "Create", new { controller = "Questionnaire", patientId = item.Id, questionnaireId = 1 })
-                </td>
-            }
-             @if (item.Info.ExaminationDate1 != null)
-            { 
-                <td>
+                }
+            </td>
+            <td>
+                @if (item.Info.ExaminationDate1 != null)
+                { 
                     @Html.DisplayFor(modelItem => item.Info.ExaminationDate1)
                     @Html.ActionLink("Edytuj", "Edit", new { controller = "Questionnaire", patientId = item.Id, questionnaireId = 6 })
-                </td>
-            }
-            else
-            {
-                <td>
-                    brak
+                }
+                else if (item.Info.ExaminationDate0 != null)
+                {
+                    <p>brak</p>
                     @Html.ActionLink("Stwórz", "Create", new { controller = "Questionnaire", patientId = item.Id, questionnaireId = 6 })
-                </td>
-            }
-             @if (item.Info.ExaminationDate2 != null)
-            { 
-                <td>
+                }
+            </td>
+            <td>
+                @if (item.Info.ExaminationDate2 != null)
+                { 
                     @Html.DisplayFor(modelItem => item.Info.ExaminationDate2)
                     @Html.ActionLink("Edytuj", "Edit", new { controller = "Questionnaire", patientId = item.Id, questionnaireId = 8 })
-                </td>
-            }
-            else
-            {
-                <td>
-                    brak
+                }
+                else if (item.Info.ExaminationDate1 != null)
+                {
+                    <p>brak</p>
                     @Html.ActionLink("Stwórz", "Create", new { controller = "Questionnaire", patientId = item.Id, questionnaireId = 8 })
-                </td>
-            }
+                }
+            </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("Edytuj", "Edit", new { id = item.Id }) | @Html.ActionLink("Usuń", "Delete", new { id = item.Id })
             </td>
         </tr>
     }

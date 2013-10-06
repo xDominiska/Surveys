@@ -9,7 +9,6 @@
 
 namespace Surveys.Models
 {
-    using Surveys.Helpers;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;

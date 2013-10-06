@@ -41,7 +41,7 @@ namespace Surveys.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            ModelState.AddModelError("", "Niepoprawna nazwa użytkownika bądź hasło.");
             return View(model);
         }
 
@@ -128,9 +128,9 @@ namespace Surveys.Controllers
         public ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
+                message == ManageMessageId.ChangePasswordSuccess ? "Twoje hasło zostało zmienione."
+                : message == ManageMessageId.SetPasswordSuccess ? "Twoje hasło zostało ustawione."
+                : message == ManageMessageId.RemoveLoginSuccess ? "Twoj zewnętrzny login został usunięty."
                 : "";
             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.ReturnUrl = Url.Action("Manage");
@@ -168,7 +168,7 @@ namespace Surveys.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+                        ModelState.AddModelError("", "Aktualne lub nowe hasło jest nieprawidłowe.");
                     }
                 }
             }
@@ -191,7 +191,7 @@ namespace Surveys.Controllers
                     }
                     catch (Exception)
                     {
-                        ModelState.AddModelError("", String.Format("Unable to create local account. An account with the name \"{0}\" may already exist.", User.Identity.Name));
+                        ModelState.AddModelError("", String.Format("Nie można utworzyć konta. Konto o nazwie \"{0}\" prawdopodobnie już istnieje.", User.Identity.Name));
                     }
                 }
             }
@@ -280,7 +280,7 @@ namespace Surveys.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
+                        ModelState.AddModelError("UserName", "Nazwa użytkonika już istnieje. Użyj innej nazwy.");
                     }
                 }
             }

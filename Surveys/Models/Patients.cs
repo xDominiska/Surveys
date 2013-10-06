@@ -24,6 +24,7 @@ namespace Surveys.Models
         }
     
         public int Id { get; set; }
+        [DisplayName("Kod")]
         public string Code { get; set; }
         public int UserId { get; set; }
         [DisplayName("Opienkun")]
@@ -34,10 +35,10 @@ namespace Surveys.Models
         [MinLength(1), MaxLength(1)]
         [DisplayName("P³eæ")]
         public string Gender { get; set; }
+        public bool IsDeleted { get; set; }
     
         public virtual ICollection<PatientsChoices> PatientsChoices { get; set; }
         public virtual ICollection<PatientsQuestionnaires> PatientsQuestionnaires { get; set; }
-
 
         [NotMapped]
         public QuestionarriesInfo Info { get; set; }
@@ -46,12 +47,14 @@ namespace Surveys.Models
         public class QuestionarriesInfo
         {
             [DataType(DataType.Date)]
+            [DisplayName("Ankieta \"0\"")]
             public Nullable<DateTime> ExaminationDate0 { get; set; }
             [DataType(DataType.Date)]
+            [DisplayName("Ankieta \"6\"")]
             public Nullable<DateTime> ExaminationDate1 { get; set; }
             [DataType(DataType.Date)]
+            [DisplayName("Ankieta \"12\"")]
             public Nullable<DateTime> ExaminationDate2 { get; set; }
         }
-    
     }
 }

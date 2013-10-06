@@ -9,6 +9,7 @@ using Surveys.Models;
 
 namespace Surveys.Controllers
 {
+    [Authorize]
     public class QuestionnaireController : Controller
     {
         private SurveysEntities db = new SurveysEntities();
