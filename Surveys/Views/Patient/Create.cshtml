@@ -1,10 +1,10 @@
 ﻿@model Surveys.Models.Patients
 
 @{
-    ViewBag.Title = "Stwórz";
+    ViewBag.Title = "Dodaj pacjenta";
 }
 
-<h2>Dodaj pacjenta</h2>
+<h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)

@@ -29,7 +29,7 @@ namespace Surveys.Models
 
     public class RegisterExternalLoginModel
     {
-        [Required]
+        [Required(ErrorMessage = "Pole {0} jest wymagane.")]
         [Display(Name = "Nazwa użytkownika")]
         public string UserName { get; set; }
 
@@ -38,12 +38,12 @@ namespace Surveys.Models
 
     public class LocalPasswordModel
     {
-        [Required]
+        [Required(ErrorMessage="Pole {0} jest wymagane.")]
         [DataType(DataType.Password)]
         [Display(Name = "Aktualne hasło")]
         public string OldPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Pole {0} jest wymagane.")]
         [StringLength(100, ErrorMessage = "{0} musi zawierać co najmniej {2} znaków.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Nowe hasło")]
@@ -57,11 +57,11 @@ namespace Surveys.Models
 
     public class LoginModel
     {
-        [Required]
+        [Required(ErrorMessage = "Pole {0} jest wymagane.")]
         [Display(Name = "Nazwa użytkownika")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Pole {0} jest wymagane.")]
         [DataType(DataType.Password)]
         [Display(Name = "Hasło")]
         public string Password { get; set; }
@@ -72,11 +72,11 @@ namespace Surveys.Models
 
     public class RegisterModel
     {
-        [Required]
-        [Display(Name = "Nazwa uzytkownika")]
+        [Required(ErrorMessage = "Pole {0} jest wymagane.")]
+        [Display(Name = "Nazwa użytkownika")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Pole {0} jest wymagane.")]
         [StringLength(100, ErrorMessage = "{0} musi zawierać co najmniej {2} znaków.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Hasło")]

@@ -20,10 +20,10 @@
                     </section>
                     <nav>
                         <ul id="menu">
-                            <li>@Html.ActionLink("Pacjenci", "Index", "Patient")</li>
-                            <li>@Html.ActionLink("Ankieta 0", "Index", "Survey0")</li>
-                            <li>@Html.ActionLink("Ankieta 6", "Index", "Survey6")</li>
-                            <li>@Html.ActionLink("Ankieta 12", "Index", "Survey12")</li>
+                            <li>@Html.ActionLink("Pacjenci", "Index", new { controller = "Patient", id = -1})</li>
+                            <li>@Html.ActionLink("Ankieta \"0\"", "Index", new { controller = "Patient", id = 0 })</li>
+                            <li>@Html.ActionLink("Ankieta \"6\"", "Index", new { controller = "Patient", id = 1 })</li>
+                            <li>@Html.ActionLink("Ankieta \"12\"", "Index", new { controller = "Patient", id = 2 })</li>
                         </ul>
                     </nav>
                 </div>

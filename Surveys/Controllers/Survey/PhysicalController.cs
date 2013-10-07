@@ -12,12 +12,17 @@ namespace Surveys.Controllers
     public class PhysicalController : Controller
     {
         private SurveysEntities db = new SurveysEntities();
+        private UsersContext userdb = new UsersContext();
 
         //
         // GET: /Physical/Edit/5
 
         public ActionResult Edit(int id)
         {
+            if (id != GetUserId() && User.Identity.Name.ToLower() != "admin")
+            {
+                return View("NotAuthorized");
+            }
             var sur = new SurveyDTO(SurveyType.Fizykalne, id, db);
             return View(sur);
         }
@@ -75,6 +80,11 @@ namespace Surveys.Controllers
         {
             db.Dispose();
             base.Dispose(disposing);
+        }
+
+        private int GetUserId()
+        {
+            return userdb.UserProfiles.Where(x => x.UserName == User.Identity.Name).FirstOrDefault().UserId;
         }
 
     }

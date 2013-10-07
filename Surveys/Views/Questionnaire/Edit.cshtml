@@ -1,10 +1,10 @@
 ﻿@model Surveys.Models.PatientsQuestionnaires
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edytuj";
 }
 
-<h2>Edit</h2>
+<h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm())
 {
@@ -35,10 +35,6 @@
         </p>
     </fieldset>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

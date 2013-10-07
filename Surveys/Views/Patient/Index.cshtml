@@ -4,11 +4,14 @@
     ViewBag.Title = "Lista pacjentów";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2>@ViewBag.Title @ViewBag.ToFill</h2>
 
-<p>
-    @Html.ActionLink("Dodaj pacjenta", "Create")
-</p>
+@if (ViewBag.CanCreate)
+{
+    <p>
+        @Html.ActionLink("Dodaj pacjenta", "Create")
+    </p>
+}
 <table>
     <tr>
         <th>
@@ -32,7 +35,10 @@
         <th>
             @Html.DisplayNameFor(model => model.Info.ExaminationDate2)
         </th>
-        <th></th>
+        <th>
+            Opcje
+
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -53,13 +59,14 @@
             <td>
                 @if (item.Info.ExaminationDate0 != null)
                 { 
-                
                     @Html.DisplayFor(modelItem => item.Info.ExaminationDate0)
+                    <br />
                     @Html.ActionLink("Edytuj", "Edit", new { controller = "Questionnaire", patientId = item.Id, questionnaireId = 1 })
                 }
                 else
                 {
                     <p>brak</p>
+                    <br />
                     @Html.ActionLink("Stwórz", "Create", new { controller = "Questionnaire", patientId = item.Id, questionnaireId = 1 })
                 }
             </td>
@@ -67,11 +74,14 @@
                 @if (item.Info.ExaminationDate1 != null)
                 { 
                     @Html.DisplayFor(modelItem => item.Info.ExaminationDate1)
+                    <br />
                     @Html.ActionLink("Edytuj", "Edit", new { controller = "Questionnaire", patientId = item.Id, questionnaireId = 6 })
                 }
-                else if (item.Info.ExaminationDate0 != null)
+                else if (item.Info.ExaminationDate0 != null && (DateTime.Now - item.Info.ExaminationDate0 > new TimeSpan(30 * 6, 0, 0, 0))
+                                                              && item.Info.ExaminationDate1 == null)
                 {
                     <p>brak</p>
+                    <br />
                     @Html.ActionLink("Stwórz", "Create", new { controller = "Questionnaire", patientId = item.Id, questionnaireId = 6 })
                 }
             </td>
@@ -79,11 +89,14 @@
                 @if (item.Info.ExaminationDate2 != null)
                 { 
                     @Html.DisplayFor(modelItem => item.Info.ExaminationDate2)
+                    <br />
                     @Html.ActionLink("Edytuj", "Edit", new { controller = "Questionnaire", patientId = item.Id, questionnaireId = 8 })
                 }
-                else if (item.Info.ExaminationDate1 != null)
+                else if (item.Info.ExaminationDate1 != null && (DateTime.Now - item.Info.ExaminationDate1 > new TimeSpan(30 * 12, 0, 0, 0))
+                                            && item.Info.ExaminationDate2 == null)
                 {
                     <p>brak</p>
+                    <br />
                     @Html.ActionLink("Stwórz", "Create", new { controller = "Questionnaire", patientId = item.Id, questionnaireId = 8 })
                 }
             </td>

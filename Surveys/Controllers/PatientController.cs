@@ -14,14 +14,23 @@ namespace Surveys.Controllers
     {
         private SurveysEntities db = new SurveysEntities();
         private UsersContext userdb = new UsersContext();
-        private const TimeSpan SIX_MONTHS = new TimeSpan(30 * 6, 0, 0, 0);
-        private const TimeSpan TWELVE_MONTHS = new TimeSpan(30 * 12, 0, 0, 0);
+        private TimeSpan SIX_MONTHS { get { return new TimeSpan(30 * 6, 0, 0, 0); } }
+        private TimeSpan TWELVE_MONTHS { get { return new TimeSpan(30 * 12, 0, 0, 0); } }
 
         //
         // GET: /Patient/
 
         public ActionResult Index(int id = -1)
         {
+            if (id == -1)
+            {
+                ViewBag.CanCreate = true;
+            }
+            else
+            {
+                ViewBag.CanCreate = false;
+            }
+
             IList<Patients> patients;
             if (User.Identity.IsAuthenticated && User.Identity.Name.ToLower() == "admin")
             {
@@ -68,19 +77,22 @@ namespace Surveys.Controllers
 
             if (id == 0)
             {
-                patients = patients.Where(p => p.Info.ExaminationDate0 == null).ToList() ;
+                patients = patients.Where(p => p.Info.ExaminationDate0 == null).ToList();
+                ViewBag.ToFill = "- wypełnij ankietę \"0\"";
             }
             else if (id == 1)
             {
                 patients = patients.Where(p => p.Info.ExaminationDate0 != null
                                             && (DateTime.Now - p.Info.ExaminationDate0 > SIX_MONTHS)
                                             && p.Info.ExaminationDate1 == null).ToList();
+                ViewBag.ToFill = "- wypełnij ankietę \"1\"";
             }
             else if (id == 2)
             {
                 patients = patients.Where(p => p.Info.ExaminationDate1 != null
                                             && (DateTime.Now - p.Info.ExaminationDate1 > TWELVE_MONTHS)
                                             && p.Info.ExaminationDate2 == null).ToList();
+                ViewBag.ToFill = "- wypełnij ankietę \"2\"";
             }
 
             return View(patients);
@@ -95,6 +107,10 @@ namespace Surveys.Controllers
             if (patient == null || patient.IsDeleted)
             {
                 return HttpNotFound();
+            }
+            if (patient.UserId != GetUserId() && User.Identity.Name.ToLower() != "admin")
+            {
+                return View("NotAuthorized");
             }
 
             patient.Info = new Patients.QuestionarriesInfo();
@@ -143,6 +159,10 @@ namespace Surveys.Controllers
             {
                 return HttpNotFound();
             }
+            if (patient.UserId != GetUserId() && User.Identity.Name.ToLower() != "admin")
+            {
+                return View("NotAuthorized");
+            }
 
             InitializeDataBag();
 
@@ -174,6 +194,10 @@ namespace Surveys.Controllers
             if (patient == null || patient.IsDeleted)
             {
                 return HttpNotFound();
+            }
+            if (patient.UserId != GetUserId() && User.Identity.Name.ToLower() != "admin")
+            {
+                return View("NotAuthorized");
             }
             return View(patient);
         }

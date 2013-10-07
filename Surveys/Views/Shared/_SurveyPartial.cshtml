@@ -1,5 +1,7 @@
 ﻿@model Surveys.DTOs.SurveyDTO
 
+@Html.ValidationSummary()
+
 @using (Html.BeginForm())
 {
     <fieldset>
@@ -58,6 +60,7 @@
                                                                                                                                          {
                                                                                                                                              if (Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Options[e] != null)
                                                                                                                                              {                      
+            <p>&nbsp&nbsp&nbsp</p>
             @Html.RadioButtonFor(model => Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Text,
                                           Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Options[e].Option.Text);
             @Html.LabelFor(model => Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Text,
@@ -73,7 +76,17 @@
             <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
             <p>@Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Answer.Options.First().Text</p>
                                                                                                                                          }
-            @Html.EditorFor(model => Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Text);
+            @Html.TextBoxFor(model => Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Text, new { type = "text" });
+                                                                                                                                     }
+                                                                                                                                     else if (Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Answer.AnswerTypeId == (int)Surveys.DTOs.AnswerType.Number)
+                                                                                                                                     {
+                                                                                                                                         if (Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Answer.Options != null && Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Answer.Options.Count == 1)
+                                                                                                                                         {
+            <br />
+            <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
+            <p>@Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Answer.Options.First().Text</p>
+                                                                                                                                         }
+            @Html.TextBoxFor(model => Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Text, new { type = "number" });
                                                                                                                                      }
                                                                                                                                      else if (Model.Questions[a].Answers[b].Options[c].NextQuestion.Answers[d].Answer.AnswerTypeId == (int)Surveys.DTOs.AnswerType.ComboBox)
                                                                                                                                      {
@@ -97,7 +110,17 @@
             <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
             <p>@Model.Questions[a].Answers[b].Answer.Options.First().Text</p>
                                     }
-            @Html.EditorFor(model => Model.Questions[a].Answers[b].Text);
+            @Html.TextBoxFor(model => Model.Questions[a].Answers[b].Text, new { type = "text" });
+                                }
+                                else if (Model.Questions[a].Answers[b].Answer.AnswerTypeId == (int)Surveys.DTOs.AnswerType.Number)
+                                {
+                                    if (Model.Questions[a].Answers[b].Answer.Options != null && Model.Questions[a].Answers[b].Answer.Options.Count == 1)
+                                    {
+            <br />
+            <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
+            <p>@Model.Questions[a].Answers[b].Answer.Options.First().Text</p>
+                                    }
+            @Html.TextBoxFor(model => Model.Questions[a].Answers[b].Text, new { type = "number" });
                                 }
                                 else if (Model.Questions[a].Answers[b].Answer.AnswerTypeId == (int)Surveys.DTOs.AnswerType.ComboBox)
                                 {

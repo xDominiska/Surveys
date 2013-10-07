@@ -129,7 +129,8 @@ namespace Surveys.DTOs
         RadioButton = 1,
         CheckBox = 2,
         ComboBox = 3,
-        Text = 4
+        Text = 4,
+        Number = 5
     }
 
     public enum SurveyType

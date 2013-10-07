@@ -6,41 +6,11 @@
 
 <h2>@ViewBag.Title</h2>
 
-<h3>Na pewno usunąć tego pacjenta?</h3>
-<fieldset>
-    <legend>Patient</legend>
+<h3>Na pewno usunąć pacjenta <i>@Model.Code</i>?</h3>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Code)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Code)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Guardian)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Guardian)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.BirthDate)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.BirthDate)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Gender)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Gender)
-    </div>
-</fieldset>
 @using (Html.BeginForm()) {
     <p>
         <input type="submit" value="Usuń" /> |
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Wroć do listy pacjentów", "Index")
     </p>
 }

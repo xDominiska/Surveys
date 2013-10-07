@@ -188,15 +188,13 @@
     <Compile Include="Controllers\Survey\Interview1Controller.cs" />
     <Compile Include="Controllers\Survey\Interview2Controller.cs" />
     <Compile Include="Controllers\Survey\LabController.cs" />
-    <Compile Include="Controllers\Survey\PatientController.cs" />
+    <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\Survey\PhysicalController.cs" />
     <Compile Include="Controllers\Survey\PictureController.cs" />
     <Compile Include="Controllers\QuestionnaireController.cs" />
-    <Compile Include="Controllers\Survey0Controller.cs" />
     <Compile Include="Controllers\Survey\Survey12Controller.cs" />
     <Compile Include="Controllers\Survey\Survey6AController.cs" />
     <Compile Include="Controllers\Survey\Survey6BController.cs" />
-    <Compile Include="DTOs\Interview1DTO.cs" />
     <Compile Include="DTOs\SurveyDTO.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -393,6 +391,7 @@
     <Content Include="Views\Survey12\Edit.cshtml" />
     <Content Include="Views\Survey6A\Edit.cshtml" />
     <Content Include="Views\Survey6B\Edit.cshtml" />
+    <Content Include="Views\Shared\NotAuthorized.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

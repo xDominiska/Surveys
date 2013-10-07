@@ -12,12 +12,17 @@ namespace Surveys.Controllers
     public class Survey12Controller : Controller
     {
         private SurveysEntities db = new SurveysEntities();
+        private UsersContext userdb = new UsersContext();
 
         //
         // GET: /Survey12/Edit/5
 
         public ActionResult Edit(int id)
         {
+            if (id != GetUserId() && User.Identity.Name.ToLower() != "admin")
+            {
+                return View("NotAuthorized");
+            }
             SurveyDTO sur;
             if (db.PatientsChoices.Where(x => x.PatientId == id && x.AnswerId > 15000 && x.AnswerId < 20000 && (string)x.Answer == "Tak").Count() > 0)
             {
@@ -85,6 +90,11 @@ namespace Surveys.Controllers
         {
             db.Dispose();
             base.Dispose(disposing);
+        }
+
+        private int GetUserId()
+        {
+            return userdb.UserProfiles.Where(x => x.UserName == User.Identity.Name).FirstOrDefault().UserId;
         }
 
     }

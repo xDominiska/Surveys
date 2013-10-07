@@ -14,6 +14,7 @@ namespace Surveys.Models
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
     
     public partial class Patients
     {
@@ -27,7 +28,7 @@ namespace Surveys.Models
         [DisplayName("Kod")]
         public string Code { get; set; }
         public int UserId { get; set; }
-        [DisplayName("Opienkun")]
+        [DisplayName("Opiekun")]
         public string Guardian { get; set; }
         [DataType(DataType.Date)]
         [DisplayName("Data urodzenia")]

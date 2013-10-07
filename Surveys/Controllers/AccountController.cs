@@ -372,34 +372,34 @@ namespace Surveys.Controllers
             switch (createStatus)
             {
                 case MembershipCreateStatus.DuplicateUserName:
-                    return "User name already exists. Please enter a different user name.";
+                    return "Nazwa użytkownika już istnieje. Podaj inną.";
 
                 case MembershipCreateStatus.DuplicateEmail:
-                    return "A user name for that e-mail address already exists. Please enter a different e-mail address.";
+                    return "Użytkownik z tym adresem e-mail już istnieje. Podaj inny.";
 
                 case MembershipCreateStatus.InvalidPassword:
-                    return "The password provided is invalid. Please enter a valid password value.";
+                    return "Wprowadzone hasło jest nieprawidłowe. Podaj inne.";
 
                 case MembershipCreateStatus.InvalidEmail:
-                    return "The e-mail address provided is invalid. Please check the value and try again.";
+                    return "Podany adres e-mail jest nieprawidłowy. Podaj inny.";
 
                 case MembershipCreateStatus.InvalidAnswer:
-                    return "The password retrieval answer provided is invalid. Please check the value and try again.";
+                    return "Odpowiedź jest nieprawidłowa. Sprawdź ją i wprowadź ponownie.";
 
                 case MembershipCreateStatus.InvalidQuestion:
-                    return "The password retrieval question provided is invalid. Please check the value and try again.";
+                    return "Pytanie jest nieprawidłowe. Sprawdź je i wprowadź ponownie.";
 
                 case MembershipCreateStatus.InvalidUserName:
-                    return "The user name provided is invalid. Please check the value and try again.";
+                    return "Nazwa użytkonika jest nieprawidłowa. Sprawdź ją i wprowadź ponownie.";
 
                 case MembershipCreateStatus.ProviderError:
-                    return "The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
+                    return "Wystąpił błąd z uwierzytelnianiem. Sprawdź wprowadone dane i spróbuj ponownie. Jeśli problem nie ustąpi, skontaktuj się z administratorem.";
 
                 case MembershipCreateStatus.UserRejected:
-                    return "The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
+                    return "Stworzenie nowego użytkownika zostało odrzucone. Sprawdź wprowadone dane i spróbuj ponownie. Jeśli problem nie ustąpi, skontaktuj się z administratorem.";
 
                 default:
-                    return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
+                    return "Wystąpił nieznany błąd. Sprawdź wprowadone dane i spróbuj ponownie. Jeśli problem nie ustąpi, skontaktuj się z administratorem.";
             }
         }
         #endregion
