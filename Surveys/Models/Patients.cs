@@ -25,6 +25,7 @@ namespace Surveys.Models
         }
     
         public int Id { get; set; }
+        [Required(ErrorMessage="Pole Kod jest wymagane")]
         [DisplayName("Kod")]
         public string Code { get; set; }
         public int UserId { get; set; }
